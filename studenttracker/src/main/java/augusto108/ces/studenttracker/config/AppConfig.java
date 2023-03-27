@@ -41,9 +41,11 @@ public class AppConfig {
         final int maxPoolSize = Integer.parseInt(Objects.requireNonNull(env.getProperty("connection.pool.maxPoolSize")));
         final int maxIdleTime = Integer.parseInt(Objects.requireNonNull(env.getProperty("connection.pool.maxIdleTime")));
 
-        for (Integer integer : Arrays.asList(initialPoolSize, minPoolSize, maxPoolSize, maxIdleTime)) {
-            LOGGER.info("Data source property: " + integer);
-        }
+        LOGGER.info("-> URL: " + env.getProperty("jdbc.url"));
+        LOGGER.info("-> Initial pool size: " + initialPoolSize);
+        LOGGER.info("-> Min pool size: " + minPoolSize);
+        LOGGER.info("-> Max pool size: " + maxPoolSize);
+        LOGGER.info("-> Max idle time: " + maxIdleTime);
 
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
 
