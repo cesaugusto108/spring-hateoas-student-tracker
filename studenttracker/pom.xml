@@ -73,7 +73,7 @@
     </dependencies>
 
     <build>
-        <finalName>springrestfulservstudies</finalName>
+        <finalName>studenttracker</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
