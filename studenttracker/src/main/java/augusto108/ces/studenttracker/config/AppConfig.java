@@ -33,16 +33,16 @@ public class AppConfig {
         this.env = env;
     }
 
-    private String getPropertyInt(String property) {
-        return Objects.requireNonNull(env.getProperty(property));
-    }
-
     private static void log(String jdbcUrl, int initPoolSize, int minPoolSize, int maxPoolSize, int maxIdleTime) {
         LOGGER.info("-> URL: " + jdbcUrl);
         LOGGER.info("-> Initial pool size: " + initPoolSize);
         LOGGER.info("-> Min pool size: " + minPoolSize);
         LOGGER.info("-> Max pool size: " + maxPoolSize);
         LOGGER.info("-> Max idle time: " + maxIdleTime);
+    }
+
+    private String getPropertyInt(String property) {
+        return Objects.requireNonNull(env.getProperty(property));
     }
 
     @Bean
