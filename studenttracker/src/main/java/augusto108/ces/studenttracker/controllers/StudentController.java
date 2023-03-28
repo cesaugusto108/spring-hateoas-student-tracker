@@ -8,6 +8,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.NoResultException;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -34,7 +35,13 @@ public class StudentController {
     ) {
         log(requestHeadersMap);
 
-        return ResponseEntity.ok(assembler.toModel(studentService.getStudent(id)));
+        try {
+            return ResponseEntity.ok(assembler.toModel(studentService.getStudent(id)));
+        } catch (NoResultException e) {
+            throw new NoResultException(e.getMessage() + ". Id: " + id);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException(e.getMessage());
+        }
     }
 
     @GetMapping(value = {"/", ""}, produces = "application/hal+json")
