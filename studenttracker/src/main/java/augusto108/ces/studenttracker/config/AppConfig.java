@@ -15,7 +15,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.sql.DataSource;
 import java.beans.PropertyVetoException;
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -34,33 +33,44 @@ public class AppConfig {
         this.env = env;
     }
 
-    @Bean
-    public DataSource configDataSource() {
-        final int initialPoolSize = Integer.parseInt(Objects.requireNonNull(env.getProperty("connection.pool.initialPoolSize")));
-        final int minPoolSize = Integer.parseInt(Objects.requireNonNull(env.getProperty("connection.pool.minPoolSize")));
-        final int maxPoolSize = Integer.parseInt(Objects.requireNonNull(env.getProperty("connection.pool.maxPoolSize")));
-        final int maxIdleTime = Integer.parseInt(Objects.requireNonNull(env.getProperty("connection.pool.maxIdleTime")));
+    private String getPropertyInt(String property) {
+        return Objects.requireNonNull(env.getProperty(property));
+    }
 
-        LOGGER.info("-> URL: " + env.getProperty("jdbc.url"));
-        LOGGER.info("-> Initial pool size: " + initialPoolSize);
+    private static void log(String jdbcUrl, int initPoolSize, int minPoolSize, int maxPoolSize, int maxIdleTime) {
+        LOGGER.info("-> URL: " + jdbcUrl);
+        LOGGER.info("-> Initial pool size: " + initPoolSize);
         LOGGER.info("-> Min pool size: " + minPoolSize);
         LOGGER.info("-> Max pool size: " + maxPoolSize);
         LOGGER.info("-> Max idle time: " + maxIdleTime);
+    }
+
+    @Bean
+    public DataSource configDataSource() {
+        final String jdbcDriver = env.getProperty("jdbc.driver");
+        final String jdbcUrl = env.getProperty("jdbc.url");
+        final String jdbcUser = env.getProperty("jdbc.user");
+        final String jdbcPassword = env.getProperty("jdbc.password");
+
+        final int initPoolSize = Integer.parseInt(getPropertyInt("connection.pool.initialPoolSize"));
+        final int minPoolSize = Integer.parseInt(getPropertyInt("connection.pool.minPoolSize"));
+        final int maxPoolSize = Integer.parseInt(getPropertyInt("connection.pool.maxPoolSize"));
+        final int maxIdleTime = Integer.parseInt(getPropertyInt("connection.pool.maxIdleTime"));
+
+        log(jdbcUrl, initPoolSize, minPoolSize, maxPoolSize, maxIdleTime);
 
         ComboPooledDataSource dataSource = new ComboPooledDataSource();
 
         try {
-            dataSource.setDriverClass(env.getProperty("jdbc.driver"));
+            dataSource.setDriverClass(jdbcDriver);
         } catch (PropertyVetoException e) {
             throw new RuntimeException(e);
         }
 
-        dataSource.setJdbcUrl(env.getProperty("jdbc.url"));
-        dataSource.setUser(env.getProperty("jdbc.user"));
-        dataSource.setPassword(env.getProperty("jdbc.password"));
-
-
-        dataSource.setInitialPoolSize(initialPoolSize);
+        dataSource.setJdbcUrl(jdbcUrl);
+        dataSource.setUser(jdbcUser);
+        dataSource.setPassword(jdbcPassword);
+        dataSource.setInitialPoolSize(initPoolSize);
         dataSource.setMinPoolSize(minPoolSize);
         dataSource.setMaxPoolSize(maxPoolSize);
         dataSource.setMaxIdleTime(maxIdleTime);
