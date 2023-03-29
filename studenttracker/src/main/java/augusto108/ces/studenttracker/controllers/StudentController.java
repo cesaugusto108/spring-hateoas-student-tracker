@@ -5,6 +5,7 @@ import augusto108.ces.studenttracker.entities.Student;
 import augusto108.ces.studenttracker.services.StudentService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,8 @@ public class StudentController {
     }
 
     private static void log(Map<String, String> requestHeadersMap) {
-        requestHeadersMap.forEach((k, v) -> LOGGER.info(String.format("Request header: %s = %s", k, v)));
+        requestHeadersMap
+                .forEach((k, v) -> LOGGER.info(String.format("Request header: %s = %s", k, v)));
     }
 
     @GetMapping(value = "/{id}", produces = "application/hal+json")
@@ -51,5 +53,16 @@ public class StudentController {
         log(requestHeadersMap);
 
         return ResponseEntity.ok(assembler.toCollectionModel(studentService.getStudents()));
+    }
+
+    @PostMapping(value = {"/save"}, produces = "application/hal+json", consumes = "application/json")
+    public ResponseEntity<EntityModel<Student>> saveStudent(
+            @RequestBody Student student, @RequestHeader Map<String, String> requestHeadersMap
+    ) {
+        log(requestHeadersMap);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(assembler.toModel(studentService.saveStudent(student)));
     }
 }

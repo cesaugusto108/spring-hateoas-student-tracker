@@ -18,15 +18,19 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class StudentEntityModelAssembler implements RepresentationModelAssembler<Student, EntityModel<Student>> {
     @Override
     public EntityModel<Student> toModel(Student entity) {
+        final Class<StudentController> c = StudentController.class;
+
         return EntityModel.of(
                 entity,
-                linkTo(methodOn(StudentController.class).getStudent(entity.getId(), new HashMap<>())).withSelfRel(),
-                linkTo(methodOn(StudentController.class).getStudents(new HashMap<>())).withRel("students")
+                linkTo(methodOn(c).getStudent(entity.getId(), new HashMap<>())).withSelfRel(),
+                linkTo(methodOn(c).getStudents(new HashMap<>())).withRel("students")
         );
     }
 
     @Override
     public CollectionModel<EntityModel<Student>> toCollectionModel(Iterable<? extends Student> entities) {
+        final Class<StudentController> c = StudentController.class;
+
         List<EntityModel<Student>> studentEntityModels = new ArrayList<>();
 
         for (Student entity : entities) {
@@ -35,7 +39,8 @@ public class StudentEntityModelAssembler implements RepresentationModelAssembler
 
         return CollectionModel.of(
                 studentEntityModels,
-                linkTo(methodOn(StudentController.class).getStudents(new HashMap<>())).withSelfRel()
+                linkTo(methodOn(c).getStudents(new HashMap<>())).withSelfRel(),
+                linkTo(methodOn(c).saveStudent(new Student(), new HashMap<>())).withRel("save")
         );
     }
 }
