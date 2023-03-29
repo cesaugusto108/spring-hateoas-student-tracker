@@ -1,19 +1,23 @@
 package augusto108.ces.studenttracker.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_student")
 public class Student extends BaseEntity {
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_student_address",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id")
+    )
+    private final Set<Address> addresses = new HashSet<>();
     @Embedded
     private Name name;
-
     @Column(name = "email", unique = true, nullable = false)
     private String email;
-
     @Column(name = "registration", unique = true, nullable = false)
     private String registration;
 
@@ -39,6 +43,10 @@ public class Student extends BaseEntity {
 
     public void setRegistration(String registration) {
         this.registration = registration;
+    }
+
+    public Set<Address> getAddresses() {
+        return addresses;
     }
 
     @Override
