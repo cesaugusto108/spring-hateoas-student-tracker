@@ -24,6 +24,7 @@ public class StudentEntityModelAssembler implements RepresentationModelAssembler
                 entity,
                 linkTo(methodOn(c).getStudent(entity.getId(), new HashMap<>())).withSelfRel(),
                 linkTo(methodOn(c).updateStudent(entity.getId(), new Student(), new HashMap<>())).withRel("update"),
+                linkTo(methodOn(c).deleteStudent(entity.getId(), new HashMap<>())).withRel("delete"),
                 linkTo(methodOn(c).getStudents(new HashMap<>())).withRel("students")
         );
     }

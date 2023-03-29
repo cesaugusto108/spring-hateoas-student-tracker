@@ -88,4 +88,19 @@ public class StudentController {
 
         return ResponseEntity.status(HttpStatus.OK).body(assembler.toModel(studentService.updateStudent(s)));
     }
+
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<Void> deleteStudent(
+            @PathVariable Long id, @RequestHeader Map<String, String> requestHeadersMap
+    ) {
+        try {
+            studentService.deleteStudent(studentService.getStudent(id));
+        } catch (NoResultException e) {
+            throw new NoResultException(e.getMessage() + ". Id: " + id);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException(e.getMessage());
+        }
+
+        return ResponseEntity.noContent().build();
+    }
 }
