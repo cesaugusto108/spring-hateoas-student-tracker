@@ -14,4 +14,6 @@ public interface StudentRepository {
     Student updateStudent(Student student);
 
     void deleteStudent(Student student);
+
+    List<Student> searchStudents(String search);
 }

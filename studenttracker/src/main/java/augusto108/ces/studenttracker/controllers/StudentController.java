@@ -55,7 +55,7 @@ public class StudentController {
         return ResponseEntity.ok(assembler.toCollectionModel(studentService.getStudents()));
     }
 
-    @PostMapping(value = {"/save"}, produces = "application/hal+json", consumes = "application/json")
+    @PostMapping(value = "/save", produces = "application/hal+json", consumes = "application/json")
     public ResponseEntity<EntityModel<Student>> saveStudent(
             @RequestBody Student student, @RequestHeader Map<String, String> requestHeadersMap
     ) {
@@ -102,5 +102,14 @@ public class StudentController {
         }
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/search", produces = "application/hal+json")
+    public ResponseEntity<CollectionModel<EntityModel<Student>>> searchStudents(
+            @RequestParam String search, @RequestHeader Map<String, String> requestHeadersMap
+    ) {
+        log(requestHeadersMap);
+
+        return ResponseEntity.ok(assembler.toCollectionModel(studentService.searchStudents(search)));
     }
 }

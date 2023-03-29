@@ -42,6 +42,7 @@ public class StudentEntityModelAssembler implements RepresentationModelAssembler
         return CollectionModel.of(
                 studentEntityModels,
                 linkTo(methodOn(c).getStudents(new HashMap<>())).withSelfRel(),
+                linkTo(methodOn(c).searchStudents("", new HashMap<>())).withRel("search"),
                 linkTo(methodOn(c).saveStudent(new Student(), new HashMap<>())).withRel("save")
         );
     }

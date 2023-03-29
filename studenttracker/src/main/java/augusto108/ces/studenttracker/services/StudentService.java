@@ -14,4 +14,6 @@ public interface StudentService {
     Student updateStudent(Student student);
 
     void deleteStudent(Student student);
+
+    List<Student> searchStudents(String search);
 }

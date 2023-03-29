@@ -55,4 +55,19 @@ public class StudentRepositoryImpl implements StudentRepository {
                 .getCurrentSession()
                 .delete(student);
     }
+
+    @Override
+    public List<Student> searchStudents(String search) {
+        return sessionFactory
+                .getCurrentSession()
+                .createQuery(
+                        "from Student where lower(first_name) like :search " +
+                                "or lower(last_name) like :search " +
+                                "or lower(email) like :search " +
+                                "or registration like :search",
+                        Student.class
+                )
+                .setParameter("search", "%" + search + "%")
+                .getResultList();
+    }
 }

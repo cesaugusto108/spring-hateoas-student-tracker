@@ -40,4 +40,9 @@ public class StudentServiceImpl implements StudentService {
     public void deleteStudent(Student student) {
         studentRepository.deleteStudent(student);
     }
+
+    @Override
+    public List<Student> searchStudents(String search) {
+        return studentRepository.searchStudents(search);
+    }
 }
