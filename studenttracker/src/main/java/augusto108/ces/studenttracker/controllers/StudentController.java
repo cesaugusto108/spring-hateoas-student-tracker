@@ -65,4 +65,27 @@ public class StudentController {
                 .status(HttpStatus.CREATED)
                 .body(assembler.toModel(studentService.saveStudent(student)));
     }
+
+    @PutMapping(value = "/{id}/update", produces = "application/hal+json", consumes = "application/json")
+    public ResponseEntity<EntityModel<Student>> updateStudent(
+            @PathVariable Long id, @RequestBody Student student, @RequestHeader Map<String, String> requestHeadersMap
+    ) {
+        log(requestHeadersMap);
+
+        Student s = null;
+
+        try {
+            s = studentService.getStudent(id);
+        } catch (NoResultException e) {
+            throw new NoResultException(e.getMessage() + ". Id: " + id);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException(e.getMessage());
+        }
+
+        s.setName(student.getName());
+        s.setEmail(student.getEmail());
+        s.setRegistration(student.getRegistration());
+
+        return ResponseEntity.status(HttpStatus.OK).body(assembler.toModel(studentService.updateStudent(s)));
+    }
 }

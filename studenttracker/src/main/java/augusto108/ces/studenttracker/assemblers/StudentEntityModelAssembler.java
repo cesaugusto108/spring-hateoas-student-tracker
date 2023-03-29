@@ -23,6 +23,7 @@ public class StudentEntityModelAssembler implements RepresentationModelAssembler
         return EntityModel.of(
                 entity,
                 linkTo(methodOn(c).getStudent(entity.getId(), new HashMap<>())).withSelfRel(),
+                linkTo(methodOn(c).updateStudent(entity.getId(), new Student(), new HashMap<>())).withRel("update"),
                 linkTo(methodOn(c).getStudents(new HashMap<>())).withRel("students")
         );
     }
