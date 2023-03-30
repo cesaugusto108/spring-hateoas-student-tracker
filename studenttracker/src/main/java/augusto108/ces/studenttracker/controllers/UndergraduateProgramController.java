@@ -113,4 +113,12 @@ public class UndergraduateProgramController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping(value = "/search", produces = "application/hal+json")
+    public ResponseEntity<CollectionModel<EntityModel<UndergraduateProgram>>> searchUndergraduatePrograms(
+            @RequestParam String search, @RequestHeader Map<String, String> requestHeadersMap
+    ) {
+        return ResponseEntity
+                .ok(assembler.toCollectionModel(undergraduateProgramService.searchUndergraduatePrograms(search)));
+    }
 }

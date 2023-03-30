@@ -40,4 +40,9 @@ public class UndergraduateProgramServiceImpl implements UndergraduateProgramServ
     public void deleteUndergraduateProgram(UndergraduateProgram undergraduateProgram) {
         undergraduateProgramRepository.deleteUndergraduateProgram(undergraduateProgram);
     }
+
+    @Override
+    public List<UndergraduateProgram> searchUndergraduatePrograms(String search) {
+        return undergraduateProgramRepository.searchUndergraduatePrograms(search);
+    }
 }

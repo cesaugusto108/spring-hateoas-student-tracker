@@ -67,7 +67,7 @@ public class StudentRepositoryImpl implements StudentRepository {
                                 "or registration like :search",
                         Student.class
                 )
-                .setParameter("search", "%" + search + "%")
+                .setParameter("search", "%" + search.toLowerCase().trim() + "%")
                 .getResultList();
     }
 }

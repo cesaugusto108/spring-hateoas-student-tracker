@@ -14,4 +14,6 @@ public interface UndergraduateProgramService {
     UndergraduateProgram updateUndergraduateProgram(UndergraduateProgram undergraduateProgram);
 
     void deleteUndergraduateProgram(UndergraduateProgram undergraduateProgram);
+
+    List<UndergraduateProgram> searchUndergraduatePrograms(String search);
 }

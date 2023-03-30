@@ -47,6 +47,7 @@ public class UndergraduateProgramEntityModelAssembler
         return CollectionModel.of(
                 undergraduateProgramEntityModels,
                 linkTo(methodOn(c).getUndergraduatePrograms(new HashMap<>())).withSelfRel(),
+                linkTo(methodOn(c).searchUndergraduatePrograms("", new HashMap<>())).withRel("search"),
                 linkTo(methodOn(c).saveUndergraduateProgram(new UndergraduateProgram(), new HashMap<>())).withRel("save")
         );
     }

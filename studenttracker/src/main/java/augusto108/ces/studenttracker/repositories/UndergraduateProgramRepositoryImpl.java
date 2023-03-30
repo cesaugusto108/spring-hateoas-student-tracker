@@ -55,4 +55,16 @@ public class UndergraduateProgramRepositoryImpl implements UndergraduateProgramR
                 .getCurrentSession()
                 .delete(undergraduateProgram);
     }
+
+    @Override
+    public List<UndergraduateProgram> searchUndergraduatePrograms(String search) {
+        return sessionFactory
+                .getCurrentSession()
+                .createQuery(
+                        "from UndergraduateProgram u where lower(description) like :search",
+                        UndergraduateProgram.class
+                )
+                .setParameter("search", "%" + search.toLowerCase().trim() + "%")
+                .getResultList();
+    }
 }
