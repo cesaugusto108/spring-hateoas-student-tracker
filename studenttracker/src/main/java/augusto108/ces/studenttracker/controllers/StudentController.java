@@ -70,7 +70,7 @@ public class StudentController {
 
     @PutMapping(value = "/{id}/update", produces = "application/hal+json", consumes = "application/json")
     public ResponseEntity<EntityModel<Student>> updateStudent(
-            @PathVariable Long id,
+            @PathVariable("id") Long id,
             @RequestBody Student student,
             @RequestHeader Map<String, String> requestHeadersMap
     ) {
