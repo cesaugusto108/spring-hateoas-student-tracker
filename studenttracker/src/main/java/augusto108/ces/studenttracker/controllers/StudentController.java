@@ -33,7 +33,8 @@ public class StudentController {
 
     @GetMapping(value = "/{id}", produces = "application/hal+json")
     public ResponseEntity<EntityModel<Student>> getStudent(
-            @PathVariable("id") Long id, @RequestHeader Map<String, String> requestHeadersMap
+            @PathVariable("id") Long id,
+            @RequestHeader Map<String, String> requestHeadersMap
     ) {
         log(requestHeadersMap);
 
@@ -57,7 +58,8 @@ public class StudentController {
 
     @PostMapping(value = "/save", produces = "application/hal+json", consumes = "application/json")
     public ResponseEntity<EntityModel<Student>> saveStudent(
-            @RequestBody Student student, @RequestHeader Map<String, String> requestHeadersMap
+            @RequestBody Student student,
+            @RequestHeader Map<String, String> requestHeadersMap
     ) {
         log(requestHeadersMap);
 
@@ -68,11 +70,13 @@ public class StudentController {
 
     @PutMapping(value = "/{id}/update", produces = "application/hal+json", consumes = "application/json")
     public ResponseEntity<EntityModel<Student>> updateStudent(
-            @PathVariable Long id, @RequestBody Student student, @RequestHeader Map<String, String> requestHeadersMap
+            @PathVariable Long id,
+            @RequestBody Student student,
+            @RequestHeader Map<String, String> requestHeadersMap
     ) {
         log(requestHeadersMap);
 
-        Student s = null;
+        Student s;
 
         try {
             s = studentService.getStudent(id);
@@ -93,8 +97,11 @@ public class StudentController {
 
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<Void> deleteStudent(
-            @PathVariable Long id, @RequestHeader Map<String, String> requestHeadersMap
+            @PathVariable("id") Long id,
+            @RequestHeader Map<String, String> requestHeadersMap
     ) {
+        log(requestHeadersMap);
+
         try {
             studentService.deleteStudent(studentService.getStudent(id));
         } catch (NoResultException e) {
@@ -108,7 +115,8 @@ public class StudentController {
 
     @GetMapping(value = "/search", produces = "application/hal+json")
     public ResponseEntity<CollectionModel<EntityModel<Student>>> searchStudents(
-            @RequestParam String search, @RequestHeader Map<String, String> requestHeadersMap
+            @RequestParam String search,
+            @RequestHeader Map<String, String> requestHeadersMap
     ) {
         log(requestHeadersMap);
 
