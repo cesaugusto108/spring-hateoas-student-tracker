@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.NoResultException;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -38,7 +39,13 @@ public class UndergraduateProgramController {
     ) {
         log(requestHeadersMap);
 
-        return ResponseEntity.ok(assembler.toModel(undergraduateProgramService.getUndergraduateProgram(id)));
+        try {
+            return ResponseEntity.ok(assembler.toModel(undergraduateProgramService.getUndergraduateProgram(id)));
+        } catch (NoResultException e) {
+            throw new NoResultException(e.getMessage() + ". Id: " + id);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException(e.getMessage());
+        }
     }
 
     @GetMapping(value = {"/", ""}, produces = "application/hal+json")
