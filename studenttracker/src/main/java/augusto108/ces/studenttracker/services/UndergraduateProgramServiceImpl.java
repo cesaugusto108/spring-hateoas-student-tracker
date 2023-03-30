@@ -25,4 +25,19 @@ public class UndergraduateProgramServiceImpl implements UndergraduateProgramServ
     public List<UndergraduateProgram> getUndergraduatePrograms() {
         return undergraduateProgramRepository.getUndergraduatePrograms();
     }
+
+    @Override
+    public UndergraduateProgram saveUndergraduateProgram(UndergraduateProgram undergraduateProgram) {
+        return undergraduateProgramRepository.saveUndergraduateProgram(undergraduateProgram);
+    }
+
+    @Override
+    public UndergraduateProgram updateUndergraduateProgram(UndergraduateProgram undergraduateProgram) {
+        return undergraduateProgramRepository.updateUndergraduateProgram(undergraduateProgram);
+    }
+
+    @Override
+    public void deleteUndergraduateProgram(UndergraduateProgram undergraduateProgram) {
+        undergraduateProgramRepository.deleteUndergraduateProgram(undergraduateProgram);
+    }
 }

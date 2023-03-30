@@ -5,6 +5,7 @@ import augusto108.ces.studenttracker.entities.UndergraduateProgram;
 import augusto108.ces.studenttracker.services.UndergraduateProgramService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,5 +48,16 @@ public class UndergraduateProgramController {
         log(requestHeadersMap);
 
         return ResponseEntity.ok(assembler.toCollectionModel(undergraduateProgramService.getUndergraduatePrograms()));
+    }
+
+    @PostMapping(value = "/save", produces = "application/hal+json", consumes = "application/json")
+    public ResponseEntity<EntityModel<UndergraduateProgram>> saveUndergraduateProgram(
+            @RequestBody UndergraduateProgram undergraduateProgram, @RequestHeader Map<String, String> requestHeadersMap
+    ) {
+        log(requestHeadersMap);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(assembler.toModel(undergraduateProgramService.saveUndergraduateProgram(undergraduateProgram)));
     }
 }

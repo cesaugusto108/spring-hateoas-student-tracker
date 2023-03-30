@@ -30,4 +30,29 @@ public class UndergraduateProgramRepositoryImpl implements UndergraduateProgramR
                 .createQuery("from UndergraduateProgram order by description", UndergraduateProgram.class)
                 .getResultList();
     }
+
+    @Override
+    public UndergraduateProgram saveUndergraduateProgram(UndergraduateProgram undergraduateProgram) {
+        sessionFactory
+                .getCurrentSession()
+                .save(undergraduateProgram);
+
+        return undergraduateProgram;
+    }
+
+    @Override
+    public UndergraduateProgram updateUndergraduateProgram(UndergraduateProgram undergraduateProgram) {
+        sessionFactory
+                .getCurrentSession()
+                .update(undergraduateProgram);
+
+        return undergraduateProgram;
+    }
+
+    @Override
+    public void deleteUndergraduateProgram(UndergraduateProgram undergraduateProgram) {
+        sessionFactory
+                .getCurrentSession()
+                .delete(undergraduateProgram);
+    }
 }

@@ -8,4 +8,10 @@ public interface UndergraduateProgramService {
     UndergraduateProgram getUndergraduateProgram(Long id);
 
     List<UndergraduateProgram> getUndergraduatePrograms();
+
+    UndergraduateProgram saveUndergraduateProgram(UndergraduateProgram undergraduateProgram);
+
+    UndergraduateProgram updateUndergraduateProgram(UndergraduateProgram undergraduateProgram);
+
+    void deleteUndergraduateProgram(UndergraduateProgram undergraduateProgram);
 }
