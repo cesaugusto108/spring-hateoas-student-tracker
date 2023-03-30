@@ -1,8 +1,8 @@
 package augusto108.ces.studenttracker.entities;
 
-import net.minidev.json.annotate.JsonIgnore;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_campus")
