@@ -35,7 +35,7 @@ public class UndergraduateProgramController {
 
     @GetMapping(value = "/{id}", produces = "application/hal+json")
     public ResponseEntity<EntityModel<UndergraduateProgram>> getUndergraduateProgram(
-            @PathVariable Long id,
+            @PathVariable("id") Long id,
             @RequestHeader Map<String, String> requestHeadersMap
     ) {
         log(requestHeadersMap);
@@ -78,7 +78,7 @@ public class UndergraduateProgramController {
     ) {
         log(requestHeadersMap);
 
-        UndergraduateProgram u = null;
+        UndergraduateProgram u;
 
         try {
             u = undergraduateProgramService.getUndergraduateProgram(id);
@@ -97,7 +97,7 @@ public class UndergraduateProgramController {
 
     @DeleteMapping("{id}/delete")
     public ResponseEntity<Void> deleteUndergraduateProgram(
-            @PathVariable Long id,
+            @PathVariable("id") Long id,
             @RequestHeader Map<String, String> requestHeadersMap
     ) {
         log(requestHeadersMap);
@@ -116,7 +116,8 @@ public class UndergraduateProgramController {
 
     @GetMapping(value = "/search", produces = "application/hal+json")
     public ResponseEntity<CollectionModel<EntityModel<UndergraduateProgram>>> searchUndergraduatePrograms(
-            @RequestParam String search, @RequestHeader Map<String, String> requestHeadersMap
+            @RequestParam String search,
+            @RequestHeader Map<String, String> requestHeadersMap
     ) {
         log(requestHeadersMap);
 
