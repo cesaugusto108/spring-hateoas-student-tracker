@@ -9,8 +9,10 @@ import java.util.Set;
 public class Student extends BaseEntity {
     @Embedded
     private Name name;
+
     @Column(name = "email", unique = true, nullable = false)
     private String email;
+
     @Column(name = "registration", unique = true, nullable = false)
     private String registration;
 
@@ -21,6 +23,14 @@ public class Student extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "address_id")
     )
     private Set<Address> addresses = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_student_undergraduate_program",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "undergraduate_program_id")
+    )
+    private Set<UndergraduateProgram> undergraduatePrograms = new HashSet<>();
 
     public Name getName() {
         return name;
@@ -52,6 +62,14 @@ public class Student extends BaseEntity {
 
     public void setAddresses(Set<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public Set<UndergraduateProgram> getUndergraduatePrograms() {
+        return undergraduatePrograms;
+    }
+
+    public void setUndergraduatePrograms(Set<UndergraduateProgram> undergraduatePrograms) {
+        this.undergraduatePrograms = undergraduatePrograms;
     }
 
     @Override
