@@ -1,0 +1,33 @@
+package augusto108.ces.studenttracker.repositories;
+
+import augusto108.ces.studenttracker.entities.UndergraduateProgram;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public class UndergraduateProgramRepositoryImpl implements UndergraduateProgramRepository {
+    private final SessionFactory sessionFactory;
+
+    public UndergraduateProgramRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public UndergraduateProgram getUndergraduateProgram(Long id) {
+        return sessionFactory
+                .getCurrentSession()
+                .createQuery("from UndergraduateProgram u where id = :id", UndergraduateProgram.class)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
+    @Override
+    public List<UndergraduateProgram> getUndergraduatePrograms() {
+        return sessionFactory
+                .getCurrentSession()
+                .createQuery("from UndergraduateProgram order by description", UndergraduateProgram.class)
+                .getResultList();
+    }
+}

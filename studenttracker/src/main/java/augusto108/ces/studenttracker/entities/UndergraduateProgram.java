@@ -12,6 +12,10 @@ public class UndergraduateProgram extends BaseEntity {
     @Column(name = "description", unique = true, nullable = false)
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "campus_id")
+    private Campus campus;
+
     @ManyToMany(mappedBy = "undergraduatePrograms", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Student> students = new HashSet<>();
@@ -30,5 +34,13 @@ public class UndergraduateProgram extends BaseEntity {
 
     public void setStudents(Set<Student> students) {
         this.students = students;
+    }
+
+    public Campus getCampus() {
+        return campus;
+    }
+
+    public void setCampus(Campus campus) {
+        this.campus = campus;
     }
 }
