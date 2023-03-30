@@ -12,12 +12,13 @@ import java.util.Set;
 @Entity
 @Table(name = "tb_address")
 public class Address extends BaseEntity {
-    @ManyToMany(mappedBy = "addresses", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private final Set<Student> students = new HashSet<>();
     private String street;
     private String number;
     private String city;
+
+    @ManyToMany(mappedBy = "addresses", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<Student> students = new HashSet<>();
 
     public String getStreet() {
         return street;
@@ -45,6 +46,10 @@ public class Address extends BaseEntity {
 
     public Set<Student> getStudents() {
         return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
     }
 
     @Override

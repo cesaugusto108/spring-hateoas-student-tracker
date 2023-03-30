@@ -7,19 +7,20 @@ import java.util.Set;
 @Entity
 @Table(name = "tb_student")
 public class Student extends BaseEntity {
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "tb_student_address",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "address_id")
-    )
-    private final Set<Address> addresses = new HashSet<>();
     @Embedded
     private Name name;
     @Column(name = "email", unique = true, nullable = false)
     private String email;
     @Column(name = "registration", unique = true, nullable = false)
     private String registration;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "tb_student_address",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id")
+    )
+    private Set<Address> addresses = new HashSet<>();
 
     public Name getName() {
         return name;
@@ -47,6 +48,10 @@ public class Student extends BaseEntity {
 
     public Set<Address> getAddresses() {
         return addresses;
+    }
+
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
     }
 
     @Override

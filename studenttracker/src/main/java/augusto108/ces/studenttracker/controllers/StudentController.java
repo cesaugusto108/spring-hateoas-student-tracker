@@ -85,6 +85,7 @@ public class StudentController {
         s.setName(student.getName());
         s.setEmail(student.getEmail());
         s.setRegistration(student.getRegistration());
+        s.setAddresses(student.getAddresses());
 
         return ResponseEntity.status(HttpStatus.OK).body(assembler.toModel(studentService.updateStudent(s)));
     }
