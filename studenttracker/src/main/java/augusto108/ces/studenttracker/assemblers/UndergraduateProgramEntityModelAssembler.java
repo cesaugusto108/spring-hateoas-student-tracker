@@ -27,6 +27,7 @@ public class UndergraduateProgramEntityModelAssembler
                 linkTo(methodOn(c)
                         .updateUndergraduateProgram(entity.getId(), new UndergraduateProgram(), new HashMap<>()))
                         .withRel("update"),
+                linkTo(methodOn(c).deleteUndergraduateProgram(entity.getId(), new HashMap<>())).withRel("delete"),
                 linkTo(methodOn(c).getUndergraduatePrograms(new HashMap<>())).withRel("undergraduatePrograms")
         );
     }

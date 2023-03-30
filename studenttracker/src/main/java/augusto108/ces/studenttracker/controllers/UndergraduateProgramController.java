@@ -76,6 +76,8 @@ public class UndergraduateProgramController {
             @RequestBody UndergraduateProgram undergraduateProgram,
             @RequestHeader Map<String, String> requestHeadersMap
     ) {
+        log(requestHeadersMap);
+
         UndergraduateProgram u = null;
 
         try {
@@ -91,5 +93,24 @@ public class UndergraduateProgramController {
         u.setStudents(undergraduateProgram.getStudents());
 
         return ResponseEntity.ok(assembler.toModel(undergraduateProgramService.updateUndergraduateProgram(u)));
+    }
+
+    @DeleteMapping("{id}/delete")
+    public ResponseEntity<Void> deleteUndergraduateProgram(
+            @PathVariable Long id,
+            @RequestHeader Map<String, String> requestHeadersMap
+    ) {
+        log(requestHeadersMap);
+
+        try {
+            undergraduateProgramService
+                    .deleteUndergraduateProgram(undergraduateProgramService.getUndergraduateProgram(id));
+        } catch (NoResultException e) {
+            throw new NoResultException(e.getMessage() + ". Id: " + id);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException(e.getMessage());
+        }
+
+        return ResponseEntity.noContent().build();
     }
 }
