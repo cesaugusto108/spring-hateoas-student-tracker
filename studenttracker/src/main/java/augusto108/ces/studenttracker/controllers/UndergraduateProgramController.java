@@ -118,6 +118,8 @@ public class UndergraduateProgramController {
     public ResponseEntity<CollectionModel<EntityModel<UndergraduateProgram>>> searchUndergraduatePrograms(
             @RequestParam String search, @RequestHeader Map<String, String> requestHeadersMap
     ) {
+        log(requestHeadersMap);
+
         return ResponseEntity
                 .ok(assembler.toCollectionModel(undergraduateProgramService.searchUndergraduatePrograms(search)));
     }
