@@ -72,7 +72,7 @@ public class UndergraduateProgramController {
 
     @PutMapping(value = "/{id}/update", produces = "application/hal+json", consumes = "application/json")
     public ResponseEntity<EntityModel<UndergraduateProgram>> updateUndergraduateProgram(
-            @PathVariable Long id,
+            @PathVariable("id") Long id,
             @RequestBody UndergraduateProgram undergraduateProgram,
             @RequestHeader Map<String, String> requestHeadersMap
     ) {
