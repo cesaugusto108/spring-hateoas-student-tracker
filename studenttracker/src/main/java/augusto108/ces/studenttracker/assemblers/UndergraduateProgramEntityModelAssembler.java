@@ -24,6 +24,9 @@ public class UndergraduateProgramEntityModelAssembler
         return EntityModel.of(
                 entity,
                 linkTo(methodOn(c).getUndergraduateProgram(entity.getId(), new HashMap<>())).withSelfRel(),
+                linkTo(methodOn(c)
+                        .updateUndergraduateProgram(entity.getId(), new UndergraduateProgram(), new HashMap<>()))
+                        .withRel("update"),
                 linkTo(methodOn(c).getUndergraduatePrograms(new HashMap<>())).withRel("undergraduatePrograms")
         );
     }
@@ -42,7 +45,8 @@ public class UndergraduateProgramEntityModelAssembler
 
         return CollectionModel.of(
                 undergraduateProgramEntityModels,
-                linkTo(methodOn(c).getUndergraduatePrograms(new HashMap<>())).withSelfRel()
+                linkTo(methodOn(c).getUndergraduatePrograms(new HashMap<>())).withSelfRel(),
+                linkTo(methodOn(c).saveUndergraduateProgram(new UndergraduateProgram(), new HashMap<>())).withRel("save")
         );
     }
 }

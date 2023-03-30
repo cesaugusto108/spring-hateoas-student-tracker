@@ -35,7 +35,8 @@ public class UndergraduateProgramController {
 
     @GetMapping(value = "/{id}", produces = "application/hal+json")
     public ResponseEntity<EntityModel<UndergraduateProgram>> getUndergraduateProgram(
-            @PathVariable Long id, @RequestHeader Map<String, String> requestHeadersMap
+            @PathVariable Long id,
+            @RequestHeader Map<String, String> requestHeadersMap
     ) {
         log(requestHeadersMap);
 
@@ -59,12 +60,36 @@ public class UndergraduateProgramController {
 
     @PostMapping(value = "/save", produces = "application/hal+json", consumes = "application/json")
     public ResponseEntity<EntityModel<UndergraduateProgram>> saveUndergraduateProgram(
-            @RequestBody UndergraduateProgram undergraduateProgram, @RequestHeader Map<String, String> requestHeadersMap
+            @RequestBody UndergraduateProgram undergraduateProgram,
+            @RequestHeader Map<String, String> requestHeadersMap
     ) {
         log(requestHeadersMap);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(assembler.toModel(undergraduateProgramService.saveUndergraduateProgram(undergraduateProgram)));
+    }
+
+    @PutMapping(value = "/{id}/update", produces = "application/hal+json", consumes = "application/json")
+    public ResponseEntity<EntityModel<UndergraduateProgram>> updateUndergraduateProgram(
+            @PathVariable Long id,
+            @RequestBody UndergraduateProgram undergraduateProgram,
+            @RequestHeader Map<String, String> requestHeadersMap
+    ) {
+        UndergraduateProgram u = null;
+
+        try {
+            u = undergraduateProgramService.getUndergraduateProgram(id);
+        } catch (NoResultException e) {
+            throw new NoResultException(e.getMessage() + ". Id: " + id);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException(e.getMessage());
+        }
+
+        u.setDescription(undergraduateProgram.getDescription());
+        u.setCampus(undergraduateProgram.getCampus());
+        u.setStudents(undergraduateProgram.getStudents());
+
+        return ResponseEntity.ok(assembler.toModel(undergraduateProgramService.updateUndergraduateProgram(u)));
     }
 }
