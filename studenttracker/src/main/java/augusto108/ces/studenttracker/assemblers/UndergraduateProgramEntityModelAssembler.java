@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -17,27 +18,29 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Component
 public class UndergraduateProgramEntityModelAssembler
         implements RepresentationModelAssembler<UndergraduateProgram, EntityModel<UndergraduateProgram>> {
+    private final Class<UndergraduateProgramController> c = UndergraduateProgramController.class;
+    private final Map<String, String> map = new HashMap<>();
+
     @Override
     public EntityModel<UndergraduateProgram> toModel(UndergraduateProgram entity) {
-        final Class<UndergraduateProgramController> c = UndergraduateProgramController.class;
+        int maxResultsValue = 5;
+        int pageValue = 0;
 
         return EntityModel.of(
                 entity,
-                linkTo(methodOn(c).getUndergraduateProgram(entity.getId(), new HashMap<>())).withSelfRel(),
+                linkTo(methodOn(c).getUndergraduateProgram(entity.getId(), map)).withSelfRel(),
                 linkTo(methodOn(c)
-                        .updateUndergraduateProgram(entity.getId(), new UndergraduateProgram(), new HashMap<>()))
+                        .updateUndergraduateProgram(entity.getId(), new UndergraduateProgram(), map))
                         .withRel("update"),
-                linkTo(methodOn(c).deleteUndergraduateProgram(entity.getId(), new HashMap<>())).withRel("delete"),
-                linkTo(methodOn(c).getUndergraduatePrograms(new HashMap<>())).withRel("undergraduatePrograms")
+                linkTo(methodOn(c).deleteUndergraduateProgram(entity.getId(), map)).withRel("delete"),
+                linkTo(methodOn(c).getUndergraduatePrograms(pageValue, maxResultsValue, map))
+                        .withRel("undergraduatePrograms")
         );
     }
 
-    @Override
     public CollectionModel<EntityModel<UndergraduateProgram>> toCollectionModel(
-            Iterable<? extends UndergraduateProgram> entities
+            Iterable<? extends UndergraduateProgram> entities, int pageValue, int maxResults
     ) {
-        final Class<UndergraduateProgramController> c = UndergraduateProgramController.class;
-
         List<EntityModel<UndergraduateProgram>> undergraduateProgramEntityModels = new ArrayList<>();
 
         for (UndergraduateProgram entity : entities) {
@@ -46,9 +49,9 @@ public class UndergraduateProgramEntityModelAssembler
 
         return CollectionModel.of(
                 undergraduateProgramEntityModels,
-                linkTo(methodOn(c).getUndergraduatePrograms(new HashMap<>())).withSelfRel(),
-                linkTo(methodOn(c).searchUndergraduatePrograms("", new HashMap<>())).withRel("search"),
-                linkTo(methodOn(c).saveUndergraduateProgram(new UndergraduateProgram(), new HashMap<>())).withRel("save")
+                linkTo(methodOn(c).getUndergraduatePrograms(pageValue, maxResults, map)).withSelfRel(),
+                linkTo(methodOn(c).searchUndergraduatePrograms("", map)).withRel("search"),
+                linkTo(methodOn(c).saveUndergraduateProgram(new UndergraduateProgram(), map)).withRel("save")
         );
     }
 }

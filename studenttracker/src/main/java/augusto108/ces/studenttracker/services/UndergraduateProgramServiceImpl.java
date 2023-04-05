@@ -22,8 +22,8 @@ public class UndergraduateProgramServiceImpl implements UndergraduateProgramServ
     }
 
     @Override
-    public List<UndergraduateProgram> getUndergraduatePrograms() {
-        return undergraduateProgramRepository.getUndergraduatePrograms();
+    public List<UndergraduateProgram> getUndergraduatePrograms(int pageValue, int maxResults) {
+        return undergraduateProgramRepository.getUndergraduatePrograms(pageValue, maxResults);
     }
 
     @Override

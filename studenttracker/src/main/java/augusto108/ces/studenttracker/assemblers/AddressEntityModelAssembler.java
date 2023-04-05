@@ -1,7 +1,6 @@
 package augusto108.ces.studenttracker.assemblers;
 
 import augusto108.ces.studenttracker.controllers.AddressController;
-import augusto108.ces.studenttracker.controllers.StudentController;
 import augusto108.ces.studenttracker.entities.Address;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;

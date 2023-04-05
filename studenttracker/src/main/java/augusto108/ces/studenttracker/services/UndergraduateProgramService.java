@@ -7,7 +7,7 @@ import java.util.List;
 public interface UndergraduateProgramService {
     UndergraduateProgram getUndergraduateProgram(Long id);
 
-    List<UndergraduateProgram> getUndergraduatePrograms();
+    List<UndergraduateProgram> getUndergraduatePrograms(int pageValue, int maxResults);
 
     UndergraduateProgram saveUndergraduateProgram(UndergraduateProgram undergraduateProgram);
 

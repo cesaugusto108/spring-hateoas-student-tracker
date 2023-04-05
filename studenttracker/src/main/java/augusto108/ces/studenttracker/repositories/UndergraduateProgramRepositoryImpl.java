@@ -24,10 +24,12 @@ public class UndergraduateProgramRepositoryImpl implements UndergraduateProgramR
     }
 
     @Override
-    public List<UndergraduateProgram> getUndergraduatePrograms() {
+    public List<UndergraduateProgram> getUndergraduatePrograms(int pageValue, int maxResults) {
         return sessionFactory
                 .getCurrentSession()
                 .createQuery("from UndergraduateProgram order by description", UndergraduateProgram.class)
+                .setFirstResult(pageValue * maxResults)
+                .setMaxResults(maxResults)
                 .getResultList();
     }
 
