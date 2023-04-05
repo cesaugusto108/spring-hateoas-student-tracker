@@ -24,10 +24,12 @@ public class AddressRepositoryImpl implements AddressRepository {
     }
 
     @Override
-    public List<Address> getAddresses() {
+    public List<Address> getAddresses(int pageValue, int maxResults) {
         return sessionFactory
                 .getCurrentSession()
                 .createQuery("from Address order by city", Address.class)
+                .setFirstResult(pageValue * maxResults)
+                .setMaxResults(maxResults)
                 .getResultList();
     }
 

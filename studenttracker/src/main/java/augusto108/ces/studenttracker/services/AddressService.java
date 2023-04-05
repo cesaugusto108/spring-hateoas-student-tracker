@@ -7,7 +7,7 @@ import java.util.List;
 public interface AddressService {
     Address getAddress(Long id);
 
-    List<Address> getAddresses();
+    List<Address> getAddresses(int pageValue, int maxResults);
 
     Address saveAddress(Address address);
 

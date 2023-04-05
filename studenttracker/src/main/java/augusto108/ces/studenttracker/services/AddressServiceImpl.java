@@ -22,8 +22,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public List<Address> getAddresses() {
-        return addressRepository.getAddresses();
+    public List<Address> getAddresses(int pageValue, int maxResults) {
+        return addressRepository.getAddresses(pageValue, maxResults);
     }
 
     @Override
