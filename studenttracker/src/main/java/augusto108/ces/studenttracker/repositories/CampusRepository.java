@@ -7,7 +7,7 @@ import java.util.List;
 public interface CampusRepository {
     Campus getCampus(Long id);
 
-    List<Campus> getCampuses();
+    List<Campus> getCampuses(int pageValue, int maxResults);
 
     Campus saveCampus(Campus campus);
 

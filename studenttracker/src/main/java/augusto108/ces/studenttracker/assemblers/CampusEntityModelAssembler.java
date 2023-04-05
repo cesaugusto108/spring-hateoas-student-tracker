@@ -10,29 +10,33 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 public class CampusEntityModelAssembler implements RepresentationModelAssembler<Campus, EntityModel<Campus>> {
+    private final Class<CampusController> c = CampusController.class;
+    private final Map<String, String> map = new HashMap<>();
+
     @Override
     public EntityModel<Campus> toModel(Campus entity) {
-        final Class<CampusController> c = CampusController.class;
+        int maxResultsValue = 5;
+        int pageValue = 0;
 
         return EntityModel.of(
                 entity,
-                linkTo(methodOn(c).getCampus(entity.getId(), new HashMap<>())).withSelfRel(),
-                linkTo(methodOn(c).updateCampus(entity.getId(), new Campus(), new HashMap<>())).withRel("update"),
-                linkTo(methodOn(c).deleteCampus(entity.getId(), new HashMap<>())).withRel("delete"),
-                linkTo(methodOn(c).getCampuses(new HashMap<>())).withRel("campuses")
+                linkTo(methodOn(c).getCampus(entity.getId(), map)).withSelfRel(),
+                linkTo(methodOn(c).updateCampus(entity.getId(), new Campus(), map)).withRel("update"),
+                linkTo(methodOn(c).deleteCampus(entity.getId(), map)).withRel("delete"),
+                linkTo(methodOn(c).getCampuses(pageValue, maxResultsValue, map)).withRel("campuses")
         );
     }
 
-    @Override
-    public CollectionModel<EntityModel<Campus>> toCollectionModel(Iterable<? extends Campus> entities) {
-        final Class<CampusController> c = CampusController.class;
-
+    public CollectionModel<EntityModel<Campus>> toCollectionModel(
+            Iterable<? extends Campus> entities, int pageValue, int maxResults
+    ) {
         List<EntityModel<Campus>> campusEntityModels = new ArrayList<>();
 
         for (Campus entity : entities) {
@@ -41,9 +45,9 @@ public class CampusEntityModelAssembler implements RepresentationModelAssembler<
 
         return CollectionModel.of(
                 campusEntityModels,
-                linkTo(methodOn(c).getCampuses(new HashMap<>())).withSelfRel(),
-                linkTo(methodOn(c).searchCampuses("", new HashMap<>())).withRel("search"),
-                linkTo(methodOn(c).saveCampus(new Campus(), new HashMap<>())).withRel("save")
+                linkTo(methodOn(c).getCampuses(pageValue, maxResults, map)).withSelfRel(),
+                linkTo(methodOn(c).searchCampuses("", map)).withRel("search"),
+                linkTo(methodOn(c).saveCampus(new Campus(), map)).withRel("save")
         );
     }
 }

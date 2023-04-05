@@ -22,8 +22,8 @@ public class CampusServiceImpl implements CampusService {
     }
 
     @Override
-    public List<Campus> getCampuses() {
-        return campusRepository.getCampuses();
+    public List<Campus> getCampuses(int pageValue, int maxResults) {
+        return campusRepository.getCampuses(pageValue, maxResults);
     }
 
     @Override

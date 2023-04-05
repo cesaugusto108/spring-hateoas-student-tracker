@@ -24,10 +24,12 @@ public class CampusRepositoryImpl implements CampusRepository {
     }
 
     @Override
-    public List<Campus> getCampuses() {
+    public List<Campus> getCampuses(int pageValue, int maxResults) {
         return sessionFactory
                 .getCurrentSession()
                 .createQuery("from Campus order by description", Campus.class)
+                .setFirstResult(pageValue * maxResults)
+                .setMaxResults(maxResults)
                 .getResultList();
     }
 
