@@ -10,29 +10,33 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 public class StudentEntityModelAssembler implements RepresentationModelAssembler<Student, EntityModel<Student>> {
+    private final Class<StudentController> c = StudentController.class;
+    private final Map<String, String> map = new HashMap<>();
+
     @Override
     public EntityModel<Student> toModel(Student entity) {
-        final Class<StudentController> c = StudentController.class;
+        int maxResultsValue = 5;
+        int pageValue = 0;
 
         return EntityModel.of(
                 entity,
-                linkTo(methodOn(c).getStudent(entity.getId(), new HashMap<>())).withSelfRel(),
-                linkTo(methodOn(c).updateStudent(entity.getId(), new Student(), new HashMap<>())).withRel("update"),
-                linkTo(methodOn(c).deleteStudent(entity.getId(), new HashMap<>())).withRel("delete"),
-                linkTo(methodOn(c).getStudents(new HashMap<>())).withRel("students")
+                linkTo(methodOn(c).getStudent(entity.getId(), map)).withSelfRel(),
+                linkTo(methodOn(c).updateStudent(entity.getId(), new Student(), map)).withRel("update"),
+                linkTo(methodOn(c).deleteStudent(entity.getId(), map)).withRel("delete"),
+                linkTo(methodOn(c).getStudents(pageValue, maxResultsValue, map)).withRel("students")
         );
     }
 
-    @Override
-    public CollectionModel<EntityModel<Student>> toCollectionModel(Iterable<? extends Student> entities) {
-        final Class<StudentController> c = StudentController.class;
-
+    public CollectionModel<EntityModel<Student>> toCollectionModel(
+            Iterable<? extends Student> entities, int pageValue, int maxResults
+    ) {
         List<EntityModel<Student>> studentEntityModels = new ArrayList<>();
 
         for (Student entity : entities) {
@@ -41,9 +45,9 @@ public class StudentEntityModelAssembler implements RepresentationModelAssembler
 
         return CollectionModel.of(
                 studentEntityModels,
-                linkTo(methodOn(c).getStudents(new HashMap<>())).withSelfRel(),
-                linkTo(methodOn(c).searchStudents("", new HashMap<>())).withRel("search"),
-                linkTo(methodOn(c).saveStudent(new Student(), new HashMap<>())).withRel("save")
+                linkTo(methodOn(c).getStudents(pageValue, maxResults, map)).withSelfRel(),
+                linkTo(methodOn(c).searchStudents("", map)).withRel("search"),
+                linkTo(methodOn(c).saveStudent(new Student(), map)).withRel("save")
         );
     }
 }

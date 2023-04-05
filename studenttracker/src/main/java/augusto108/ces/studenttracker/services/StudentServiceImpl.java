@@ -22,8 +22,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> getStudents() {
-        return studentRepository.getStudents();
+    public List<Student> getStudents(int page, int maxResults) {
+        return studentRepository.getStudents(page, maxResults);
     }
 
     @Override

@@ -24,10 +24,12 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public List<Student> getStudents() {
+    public List<Student> getStudents(int pageValue, int maxResults) {
         return sessionFactory
                 .getCurrentSession()
                 .createQuery("from Student order by registration", Student.class)
+                .setFirstResult(pageValue * maxResults)
+                .setMaxResults(maxResults)
                 .getResultList();
     }
 

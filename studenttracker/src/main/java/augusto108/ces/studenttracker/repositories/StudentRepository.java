@@ -7,7 +7,7 @@ import java.util.List;
 public interface StudentRepository {
     Student getStudent(Long id);
 
-    List<Student> getStudents();
+    List<Student> getStudents(int page, int maxResults);
 
     Student saveStudent(Student student);
 

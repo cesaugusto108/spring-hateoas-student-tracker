@@ -49,11 +49,14 @@ public class StudentController {
 
     @GetMapping(value = {"/", ""}, produces = "application/hal+json")
     public ResponseEntity<CollectionModel<EntityModel<Student>>> getStudents(
+            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(value = "maxResults", defaultValue = "5", required = false) int maxResults,
             @RequestHeader Map<String, String> requestHeadersMap
     ) {
         log(requestHeadersMap);
 
-        return ResponseEntity.ok(assembler.toCollectionModel(studentService.getStudents()));
+        return ResponseEntity
+                .ok(assembler.toCollectionModel(studentService.getStudents(page, maxResults), page, maxResults));
     }
 
     @PostMapping(value = "/save", produces = "application/hal+json", consumes = "application/json")
