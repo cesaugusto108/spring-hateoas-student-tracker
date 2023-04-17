@@ -49,13 +49,13 @@ public class CampusController {
     @GetMapping(value = {"/", ""}, produces = "application/hal+json")
     public ResponseEntity<CollectionModel<EntityModel<Campus>>> getCampuses(
             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-            @RequestParam(value = "maxResults", defaultValue = "5", required = false) int maxResults,
+            @RequestParam(value = "max", defaultValue = "5", required = false) int max,
             @RequestHeader Map<String, String> requestHeadersMap
     ) {
         log(requestHeadersMap);
 
         return ResponseEntity
-                .ok(assembler.toCollectionModel(campusService.getCampuses(page, maxResults), page, maxResults));
+                .ok(assembler.toCollectionModel(campusService.getCampuses(page, max), page, max));
     }
 
     @PostMapping(value = "/save", produces = "application/hal+json", consumes = "application/json")

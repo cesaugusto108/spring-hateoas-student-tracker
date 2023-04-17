@@ -52,7 +52,7 @@ public class UndergraduateProgramController {
     @GetMapping(value = {"/", ""}, produces = "application/hal+json")
     public ResponseEntity<CollectionModel<EntityModel<UndergraduateProgram>>> getUndergraduatePrograms(
             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-            @RequestParam(value = "maxResults", defaultValue = "5", required = false) int maxResults,
+            @RequestParam(value = "max", defaultValue = "5", required = false) int max,
             @RequestHeader Map<String, String> requestHeadersMap
     ) {
         log(requestHeadersMap);
@@ -60,7 +60,7 @@ public class UndergraduateProgramController {
         return ResponseEntity
                 .ok(
                         assembler.toCollectionModel(
-                                undergraduateProgramService.getUndergraduatePrograms(page, maxResults), page, maxResults)
+                                undergraduateProgramService.getUndergraduatePrograms(page, max), page, max)
                 );
     }
 
