@@ -34,6 +34,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/**").hasRole(role1)
+                .antMatchers(HttpMethod.PUT, "/**").hasRole(role1)
+                .antMatchers(HttpMethod.POST, "/**").hasRole(role2)
+                .antMatchers(HttpMethod.DELETE, "/**").hasRole(role2)
                 .and()
                 .httpBasic()
                 .and()
