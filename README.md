@@ -4,7 +4,7 @@ RESTful API using Spring HATEOAS. GET, POST, PUT, PATCH, DELETE HTTP requests
 
 ## GET HTTP request
 
-    > $ : curl -v http://localhost:8080/studenttracker/students/1
+    > $ : curl -v http://localhost:8080/studenttracker/students/1 | json_pp
     > 
     > GET /guests/1 HTTP/1.1
     > 
