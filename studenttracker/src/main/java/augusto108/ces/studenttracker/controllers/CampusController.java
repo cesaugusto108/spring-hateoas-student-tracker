@@ -94,8 +94,6 @@ public class CampusController {
             campusService.deleteCampus(campusService.getCampus(id));
         } catch (NoResultException e) {
             throw new NoResultException(e.getMessage() + ". Id: " + id);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException(e.getMessage());
         }
 
         return ResponseEntity.noContent().build();

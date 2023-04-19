@@ -42,8 +42,6 @@ public class AddressController {
             return ResponseEntity.ok(assembler.toModel(addressService.getAddress(id)));
         } catch (NoResultException e) {
             throw new NoResultException(e.getMessage() + ". Id: " + id);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException(e.getMessage());
         }
     }
 
@@ -83,8 +81,6 @@ public class AddressController {
             a = addressService.getAddress(id);
         } catch (NoResultException e) {
             throw new NoResultException(e.getMessage() + ". Id: " + id);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException(e.getMessage());
         }
 
         a.setStreet(address.getStreet());
@@ -105,8 +101,6 @@ public class AddressController {
             addressService.deleteAddress(addressService.getAddress(id));
         } catch (NoResultException e) {
             throw new NoResultException(e.getMessage() + ". Id: " + id);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException(e.getMessage());
         }
 
         return ResponseEntity.noContent().build();

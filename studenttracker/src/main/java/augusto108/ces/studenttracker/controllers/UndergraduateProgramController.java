@@ -44,8 +44,6 @@ public class UndergraduateProgramController {
             return ResponseEntity.ok(assembler.toModel(undergraduateProgramService.getUndergraduateProgram(id)));
         } catch (NoResultException e) {
             throw new NoResultException(e.getMessage() + ". Id: " + id);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException(e.getMessage());
         }
     }
 
@@ -90,8 +88,6 @@ public class UndergraduateProgramController {
             u = undergraduateProgramService.getUndergraduateProgram(id);
         } catch (NoResultException e) {
             throw new NoResultException(e.getMessage() + ". Id: " + id);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException(e.getMessage());
         }
 
         u.setDescription(undergraduateProgram.getDescription());
@@ -113,8 +109,6 @@ public class UndergraduateProgramController {
                     .deleteUndergraduateProgram(undergraduateProgramService.getUndergraduateProgram(id));
         } catch (NoResultException e) {
             throw new NoResultException(e.getMessage() + ". Id: " + id);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException(e.getMessage());
         }
 
         return ResponseEntity.noContent().build();

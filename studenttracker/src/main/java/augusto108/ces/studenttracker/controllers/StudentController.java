@@ -42,8 +42,6 @@ public class StudentController {
             return ResponseEntity.ok(assembler.toModel(studentService.getStudent(id)));
         } catch (NoResultException e) {
             throw new NoResultException(e.getMessage() + ". Id: " + id);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException(e.getMessage());
         }
     }
 
@@ -85,8 +83,6 @@ public class StudentController {
             s = studentService.getStudent(id);
         } catch (NoResultException e) {
             throw new NoResultException(e.getMessage() + ". Id: " + id);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException(e.getMessage());
         }
 
         s.setName(student.getName());
@@ -109,8 +105,6 @@ public class StudentController {
             studentService.deleteStudent(studentService.getStudent(id));
         } catch (NoResultException e) {
             throw new NoResultException(e.getMessage() + ". Id: " + id);
-        } catch (NumberFormatException e) {
-            throw new NumberFormatException(e.getMessage());
         }
 
         return ResponseEntity.noContent().build();

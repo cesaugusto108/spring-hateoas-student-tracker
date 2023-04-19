@@ -19,8 +19,8 @@ public class RestErrorHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
-    @ExceptionHandler(NumberFormatException.class)
-    public ResponseEntity<ErrorResponse> handleBadRequest(NumberFormatException e) {
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleBadRequest(IllegalArgumentException e) {
         ErrorResponse response = new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage(), e);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
